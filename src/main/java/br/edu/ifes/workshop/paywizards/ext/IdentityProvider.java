@@ -15,6 +15,13 @@ public class IdentityProvider {
             "amzn-us-2b8a8bc2f", CustomerType.KNOW_FRAUDSTER);
 
     public CustomerType queryCustomer(String customerId) {
+        if (customerId == null) {
+            return CustomerType.FIRST_TIMER;
+        }
+        if (customerId.length() > 17) {
+            throw new RuntimeException("customerId seems fraudulent");
+        }
+
         return MOCKED_CUSTOMERS.getOrDefault(customerId, CustomerType.FIRST_TIMER);
     }
 }
